@@ -7,6 +7,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import DraggableCard from '../../components/DraggableCard';
 import DropArea from '../../components/DropArea';
 import _ from 'lodash';
+import update from 'immutability-helper';
 
 
 const Box = styled.div`
@@ -129,10 +130,22 @@ interface TicketProps {
 }
 
 const Raffle = () => {
+  const [tickets, setTickets] = React.useState<TicketProps[]>(initTickets);
 
-  const [silverTickets, setSilverTickets] = React.useState<number>(3);
-  const [goldTickets, setGoldTickets] = React.useState<number>(3);
-  const [diamondTickets, setDiamondTickets] = React.useState<number>(4);
+  const handleDrop = React.useCallback(
+    (item: { valueType: string }) => {
+      const { valueType } = item;
+      const clone = _.cloneDeep(tickets);
+      const getItem = _.find(clone, { valueType });
+      if (typeof getItem === 'object') {
+        getItem.qty = getItem.qty - 1;
+      }
+      console.log(clone);
+      setTickets(clone);
+      
+      console.log('tickets?', tickets);
+      
+    }, [tickets])
 
   return (
     <RaffleWrapper>
@@ -143,35 +156,22 @@ const Raffle = () => {
               <div className="separator bottom">
                 <div className="col title">Get More Tickets</div>
                 <div className="col">
-                  <Btn onClick={() => {
-                    setSilverTickets(silverTickets - 1);
-                  }}>Buy</Btn>
+                  <Btn>Buy</Btn>
                 </div>
               </div>
               <div className="cards-container">
-                <div className="card-wrapper">
-                  <DraggableCard valueType={'silver'} /> 
-                  <div className="indicator">
-                    {silverTickets}
-                  </div>
-                </div>
+                {tickets.map((ticket, index) => {
+                  return (
+                    <div className="card-wrapper" key={index}>
+                      <DraggableCard valueType={ticket.valueType} /> 
+                      <div className="indicator">
+                        {ticket.qty}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <div className="cards-container">
-                <div className="card-wrapper">
-                  <DraggableCard valueType={'gold'} /> 
-                  <div className="indicator">
-                    {goldTickets}
-                  </div>
-                </div>
-              </div>
-              <div className="cards-container">
-                <div className="card-wrapper">
-                  <DraggableCard valueType={'diamond'} /> 
-                  <div className="indicator">
-                    {diamondTickets}
-                  </div>
-                </div>
-              </div>
+              
             </Box>
           </div>
           <div className="right-col">
@@ -182,7 +182,7 @@ const Raffle = () => {
                   <h1>Collectors Event</h1>
                   <p>Participate and win high quality currated NFTs</p>
                   {/* <div className="drop-area" /> */}
-                  <DropArea />
+                  <DropArea onDrop={(a) => {handleDrop(a)}}/>
                 </div>
                 <div className="separator top">
                   <div className="col box-footer">
