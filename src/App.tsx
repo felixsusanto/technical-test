@@ -3,6 +3,7 @@ import NavBar from './components/NavBar';
 import Landing from './pages/Landing';
 import { createGlobalStyle } from 'styled-components';
 import Footer from './components/Footer';
+import Raffle from './pages/Raffle';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -27,6 +28,7 @@ function App() {
       <GlobalStyle />
       <NavBar />
       <Landing />
+      <Raffle />
       <Footer />
     </div>
   );
