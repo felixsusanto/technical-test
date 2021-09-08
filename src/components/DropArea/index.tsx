@@ -9,13 +9,17 @@ const DropAreaWrapper = styled.div`
   margin: 0 auto;
 `;
 
-const DropArea: FC = () => {
-  const [{ canDrop, isOver }, drop] = useDrop(() => ({
+interface DropAreaProps {
+}
+
+const DropArea: FC<DropAreaProps> = () => {
+  const [{ canDrop, isOver, dropResult }, drop] = useDrop(() => ({
     accept: 'card',
     drop: () => ({ name: 'DropArea' }),
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
+    collect: (monitor) => ({  
+      isOver: monitor.isOver(), 
       canDrop: monitor.canDrop(),
+      dropResult: monitor.getDropResult()
     }),
   }))
 
@@ -26,10 +30,10 @@ const DropArea: FC = () => {
   } else if (canDrop) {
     backgroundColor = 'darkkhaki'
   }
-
+  console.log(dropResult);
   return (
-    <DropAreaWrapper ref={drop} role={'DropArea'} style={{ backgroundColor }}>
-      {isActive ? 'Release to drop' : 'Drag a box here'}
+    <DropAreaWrapper ref={drop} role={'DropArea'} >
+      {isActive ? 'Release to drop' : 'Drag a ticket or use the button below to draw your tickets'}
     </DropAreaWrapper>
   )
 }

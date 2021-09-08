@@ -89,9 +89,9 @@ const Footer = () => {
         <div className="right">
           {FooterNav.map((item, index) => {
             return (
-              <section className="section-nav">
+              <section className="section-nav" key={index}>
                 <div className="title">{item.title}</div>
-                {item.items.map((navitem) => <div className="nav-item">{navitem}</div>)}
+                {item.items.map((navitem) => <div className="nav-item"key={navitem}>{navitem}</div>)}
               </section>
             );
           })}

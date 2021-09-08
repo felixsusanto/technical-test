@@ -6,6 +6,8 @@ import { DndProvider, useDrop, XYCoord  } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import DraggableCard from '../../components/DraggableCard';
 import DropArea from '../../components/DropArea';
+import _ from 'lodash';
+
 
 const Box = styled.div`
   background: #fff;
@@ -106,22 +108,32 @@ const RaffleWrapper = styled.div`
   }
 `;
 
-const mockCards = [
+const initTickets: TicketProps[] = [
   {
-    type: 'silver',
+    valueType: 'silver',
     qty: 1
   },
   {
-    type: 'gold',
+    valueType: 'gold',
     qty: 3
   },
   {
-    type: 'diamond',
+    valueType: 'diamond',
     qty: 4
-  },
+  }
 ];
 
+interface TicketProps {
+  valueType: 'silver' | 'gold' | 'diamond';
+  qty: number;
+}
+
 const Raffle = () => {
+
+  const [silverTickets, setSilverTickets] = React.useState<number>(3);
+  const [goldTickets, setGoldTickets] = React.useState<number>(3);
+  const [diamondTickets, setDiamondTickets] = React.useState<number>(4);
+
   return (
     <RaffleWrapper>
       <DndProvider backend={HTML5Backend}>
@@ -131,21 +143,34 @@ const Raffle = () => {
               <div className="separator bottom">
                 <div className="col title">Get More Tickets</div>
                 <div className="col">
-                  <Btn>Buy</Btn>
+                  <Btn onClick={() => {
+                    setSilverTickets(silverTickets - 1);
+                  }}>Buy</Btn>
                 </div>
               </div>
               <div className="cards-container">
-                {mockCards.map((item, i) => {
-                  return (
-                    <div className="card-wrapper">
-                      <DraggableCard type={item.type} />
-                      {/* <img src={`https://via.placeholder.com/150x230?text=${item.type}`} /> */}
-                      <div className="indicator">
-                        {item.qty}
-                      </div>
-                    </div>
-                  );
-                })}
+                <div className="card-wrapper">
+                  <DraggableCard valueType={'silver'} /> 
+                  <div className="indicator">
+                    {silverTickets}
+                  </div>
+                </div>
+              </div>
+              <div className="cards-container">
+                <div className="card-wrapper">
+                  <DraggableCard valueType={'gold'} /> 
+                  <div className="indicator">
+                    {goldTickets}
+                  </div>
+                </div>
+              </div>
+              <div className="cards-container">
+                <div className="card-wrapper">
+                  <DraggableCard valueType={'diamond'} /> 
+                  <div className="indicator">
+                    {diamondTickets}
+                  </div>
+                </div>
               </div>
             </Box>
           </div>
