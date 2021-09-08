@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import ticketImg from '../../assets/images/ticket.svg';
 import { DndProvider, useDrop, XYCoord  } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import DraggableCard from '../../components/DraggableCard';
+import DropArea from '../../components/DropArea';
 
 const Box = styled.div`
   background: #fff;
@@ -136,7 +138,8 @@ const Raffle = () => {
                 {mockCards.map((item, i) => {
                   return (
                     <div className="card-wrapper">
-                      <img src={`https://via.placeholder.com/150x230?text=${item.type}`} />
+                      <DraggableCard type={item.type} />
+                      {/* <img src={`https://via.placeholder.com/150x230?text=${item.type}`} /> */}
                       <div className="indicator">
                         {item.qty}
                       </div>
@@ -153,9 +156,8 @@ const Raffle = () => {
                 <div className="mainbox">
                   <h1>Collectors Event</h1>
                   <p>Participate and win high quality currated NFTs</p>
-                  <div className="drop-area">
-
-                  </div>
+                  {/* <div className="drop-area" /> */}
+                  <DropArea />
                 </div>
                 <div className="separator top">
                   <div className="col box-footer">
