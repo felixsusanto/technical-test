@@ -2,6 +2,8 @@ import React from 'react';
 import Container from '../../components/Container';
 import styled from 'styled-components';
 import ticketImg from '../../assets/images/ticket.svg';
+import { DndProvider, useDrop, XYCoord  } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const Box = styled.div`
   background: #fff;
@@ -120,64 +122,66 @@ const mockCards = [
 const Raffle = () => {
   return (
     <RaffleWrapper>
-      <Container>
-        <div className="left-col">
-          <Box style={{minHeight: 850}}>
-            <div className="separator bottom">
-              <div className="col title">Get More Tickets</div>
-              <div className="col">
-                <Btn>Buy</Btn>
-              </div>
-            </div>
-            <div className="cards-container">
-              {mockCards.map((item, i) => {
-                return (
-                  <div className="card-wrapper">
-                    <img src={`https://via.placeholder.com/150x230?text=${item.type}`} />
-                    <div className="indicator">
-                      {item.qty}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </Box>
-        </div>
-        <div className="right-col">
-            
-          <Box style={{height: 850}}>
-            <div className="container">
-              <div className="mainbox">
-                <h1>Collectors Event</h1>
-                <p>Participate and win high quality currated NFTs</p>
-                <div className="drop-area">
-
+      <DndProvider backend={HTML5Backend}>
+        <Container>
+          <div className="left-col">
+            <Box style={{minHeight: 850}}>
+              <div className="separator bottom">
+                <div className="col title">Get More Tickets</div>
+                <div className="col">
+                  <Btn>Buy</Btn>
                 </div>
               </div>
-              <div className="separator top">
-                <div className="col box-footer">
-                  <div className="col" style={{paddingRight: '2em'}}>
-                    <img src={ticketImg} />
+              <div className="cards-container">
+                {mockCards.map((item, i) => {
+                  return (
+                    <div className="card-wrapper">
+                      <img src={`https://via.placeholder.com/150x230?text=${item.type}`} />
+                      <div className="indicator">
+                        {item.qty}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </Box>
+          </div>
+          <div className="right-col">
+              
+            <Box style={{height: 850}}>
+              <div className="container">
+                <div className="mainbox">
+                  <h1>Collectors Event</h1>
+                  <p>Participate and win high quality currated NFTs</p>
+                  <div className="drop-area">
+
+                  </div>
+                </div>
+                <div className="separator top">
+                  <div className="col box-footer">
+                    <div className="col" style={{paddingRight: '2em'}}>
+                      <img src={ticketImg} />
+                    </div>
+                    <div className="col">
+                      <div className="title">Draw Tickets</div>
+                      <div className="subtitle"><b>10</b> Tickets found</div>
+                      <div className="content">
+                        Open  your tickets and get a chance to win $1000 worth of high quality NFTs! {' '}
+                        <a href="#">
+                          Learn More
+                        </a>
+                      </div>
+                    </div>
                   </div>
                   <div className="col">
-                    <div className="title">Draw Tickets</div>
-                    <div className="subtitle"><b>10</b> Tickets found</div>
-                    <div className="content">
-                      Open  your tickets and get a chance to win $1000 worth of high quality NFTs! {' '}
-                      <a href="#">
-                        Learn More
-                      </a>
-                    </div>
+                    <Btn>Draw Ticket</Btn>
                   </div>
                 </div>
-                <div className="col">
-                  <Btn>Draw Ticket</Btn>
-                </div>
               </div>
-            </div>
-          </Box>
-        </div>
-      </Container>
+            </Box>
+          </div>
+        </Container>
+      </DndProvider>
     </RaffleWrapper>
   );
 };
