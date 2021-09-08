@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import heart from '../../assets/images/heart-sml.svg';
+import heartB from '../../assets/images/heart-big.svg';
+import heartF from '../../assets/images/heart-fill.svg';
 import eye from '../../assets/images/eye.svg';
 
 const CardWrapper = styled.div`
@@ -8,6 +10,7 @@ const CardWrapper = styled.div`
   overflow: hidden;
   background: #fff;
   box-shadow: 0px 6px 15px -4px rgba(0, 0, 0, 0.2);
+  position: relative;
   .img-container {
     width: 100%;
     height: 0;
@@ -87,6 +90,28 @@ const CardWrapper = styled.div`
       margin-left: 10px;
     }
   }
+  .top-meta-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    .heart {
+      cursor: pointer;
+      background: #fff;
+      line-height: 1;
+      padding: 10px;
+      border-radius: 50%;
+      box-shadow: 0px 6px 15px -4px rgba(0, 0, 0, 0.2);
+      > img {
+        position: relative;
+        top: 2px;
+      }
+    }
+  }
 
 `;
 
@@ -103,8 +128,18 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = (p) => {
+  const [like, setLike] = React.useState<boolean>(false);
+
   return (
     <CardWrapper>
+      <div className="top-meta-container">
+        <div className="tag-container"></div>
+        <div className="heart-container">
+          <div className="heart" onClick={() => setLike(!like)}>
+            <img src={like ? heartF : heartB} />
+          </div>
+        </div>
+      </div>
       <div className="img-container">
         <img src={p.imgUrl}/>
       </div>

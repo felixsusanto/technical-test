@@ -5,6 +5,12 @@ import { createGlobalStyle } from 'styled-components';
 import Footer from './components/Footer';
 
 const GlobalStyle = createGlobalStyle`
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
   html, body {
     font-family: 'Lato', sans-serif;
     font-size: 18px;
