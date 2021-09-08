@@ -94,6 +94,12 @@ const RaffleWrapper = styled.div`
       top: 0;
     }
   }
+  .drop-area {
+    width: 80%;
+    height: 500px;
+    border: 3px dashed #ddd;
+    margin: 0 auto;
+  }
 `;
 
 const mockCards = [
@@ -144,6 +150,9 @@ const Raffle = () => {
               <div className="mainbox">
                 <h1>Collectors Event</h1>
                 <p>Participate and win high quality currated NFTs</p>
+                <div className="drop-area">
+
+                </div>
               </div>
               <div className="separator top">
                 <div className="col box-footer">
